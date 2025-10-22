@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SOLUTION_NAME: SlamGame/SlamGame/SlamGame.sln
+      SOLUTION_NAME: SlamGame/SlamGame.sln
       TEST_PROJECT_PATH: SlamGame/SlamGame/TestProject/TestProject.csproj
       DOCKER_IMAGE_NAME: SlamGame
 
