@@ -32,7 +32,7 @@ jobs:
       run: dotnet build ${{ env.SOLUTION_NAME }} --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test ${{ env.SOLUTION_NAME }} --no-build --verbosity normal
+      run: dotnet test ${{ env.TEST_PROJECT_PATH }} --no-build --verbosity normal
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
