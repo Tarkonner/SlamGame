@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36603.0 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlamGame", "SlamGame\SlamGame.csproj", "{BC4CB234-ED41-41A0-82EC-3D92DF595569}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{25C8E024-7A3E-4FDA-A08B-75AF33570F9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BC4CB234-ED41-41A0-82EC-3D92DF595569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC4CB234-ED41-41A0-82EC-3D92DF595569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC4CB234-ED41-41A0-82EC-3D92DF595569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25C8E024-7A3E-4FDA-A08B-75AF33570F9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25C8E024-7A3E-4FDA-A08B-75AF33570F9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25C8E024-7A3E-4FDA-A08B-75AF33570F9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25C8E024-7A3E-4FDA-A08B-75AF33570F9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
