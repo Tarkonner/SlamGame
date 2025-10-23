@@ -68,5 +68,22 @@ namespace TestProject
             Assert.Equal(2, gm.playerList.Count);
             Assert.Equal(Vector2.Zero.ToString(), info);
         }
+
+        [Fact]
+        public void MovePlayer()
+        {
+            GameManager gm = new GameManager();
+
+            string playerID = "1";
+
+            gm.AddPlayer(playerID);
+
+            gm.MovePlayer(playerID, "m.w");
+
+            string info = gm.GetPlayerInfo(playerID);
+            Vector2 expect = new Vector2(0, 1);
+
+            Assert.Equal(expect.ToString(), info);
+        }
     }
 }

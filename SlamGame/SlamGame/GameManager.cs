@@ -8,10 +8,14 @@ namespace SlamGame
 {
     public class GameManager
     {
+        public static GameManager instance;
+
         public Dictionary<string, Player> playerList { get; private set; } = new();
 
         public GameManager() 
         {
+            instance = this;
+
             Program.OnGameLoop += Update;
         }
 
@@ -60,6 +64,10 @@ namespace SlamGame
             return collectData;
         }
 
-
+        public void MovePlayer(string id, string moveDirection)
+        {
+            Player targetPlayer = playerList[id];
+            targetPlayer.Move(moveDirection);
+        }
     }
 }
