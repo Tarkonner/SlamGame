@@ -8,6 +8,8 @@ namespace SlamGame
 {
     public class GameManager
     {
+        public Dictionary<string, Player> playerList { get; private set; } = new();
+
         public GameManager() 
         {
             Program.OnGameLoop += Update;
@@ -23,5 +25,41 @@ namespace SlamGame
         {
             Program.OnGameLoop -= Update;
         }
+
+        public void AddPlayer(string id)
+        {
+            Player spawn = new(id);
+            playerList.Add(spawn.playerID ,spawn);
+        }
+
+        public void RemovePlayer(string id)
+        {
+            playerList.Remove(id);
+        }
+
+        public string GetPlayerInfo(string id)
+        {
+            string collectData = string.Empty;
+
+            collectData = playerList[id].coordinats.ToString();
+
+            return collectData;
+        }
+
+        public string GetAllPlayerInfo()
+        {
+            string collectData = string.Empty;
+
+            foreach (var item in playerList)
+            {
+                Player targetPlayer = item.Value;
+
+                collectData += $"{targetPlayer.playerID}: coordinats {targetPlayer.coordinats};";
+            }
+
+            return collectData;
+        }
+
+
     }
 }
