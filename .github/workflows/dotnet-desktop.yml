@@ -47,5 +47,5 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: true
-        tags: ${{ tornbjerg }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+        tags: tornbjerg/${{ env.DOCKER_IMAGE_NAME }}:latest
         file: ./Dockerfile
