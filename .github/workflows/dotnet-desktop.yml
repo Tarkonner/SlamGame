@@ -1,5 +1,6 @@
 name: .NET 8 Build & Docker
 
+
 on:
   push:
     branches: [ "main" ]
@@ -12,8 +13,8 @@ jobs:
 
     env:
       SOLUTION_NAME: SlamGame/SlamGame.sln
-      TEST_PROJECT_PATH: SlamGame/SlamGame/TestProject/TestProject.csproj
-      DOCKER_IMAGE_NAME: SlamGame
+      TEST_PROJECT_PATH: SlamGame/TestProject/TestProject.csproj
+      DOCKER_IMAGE_NAME: slam_game
 
     steps:
     - name: Checkout repository
@@ -28,10 +29,10 @@ jobs:
       run: dotnet restore ${{ env.SOLUTION_NAME }}
 
     - name: Build
-      run: dotnet build ${{ env.SOLUTION_NAME }} --configuration Release --no-restore
-
+      run: dotnet build ${{ env.SOLUTION_NAME }}
+    
     - name: Test
-      run: dotnet test ${{ env.SOLUTION_NAME }} --no-build --verbosity normal
+      run: dotnet test ${{ env.TEST_PROJECT_PATH }}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
@@ -45,6 +46,7 @@ jobs:
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v5
       with:
+        context: ./SlamGame/SlamGame
+        file: ./SlamGame/SlamGame/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
-        file: ./Dockerfile
+        tags: tornbjerg/${{ env.DOCKER_IMAGE_NAME }}:latest
