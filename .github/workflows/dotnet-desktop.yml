@@ -13,7 +13,7 @@ jobs:
 
     env:
       SOLUTION_NAME: SlamGame/SlamGame.sln
-      TEST_PROJECT_PATH: SlamGame/TestProject/TestProject.csproj
+      TEST_PROJECT_PATH: SlamGame/SlamGame/TestProject/TestProject.csproj
       DOCKER_IMAGE_NAME: SlamGame
 
     steps:
@@ -29,10 +29,16 @@ jobs:
       run: dotnet restore ${{ env.SOLUTION_NAME }}
 
     - name: Build
-      run: dotnet build ${{ env.SOLUTION_NAME }} --configuration Release --no-restore
+      run: dotnet build ${{ env.SOLUTION_NAME }}
+    
+    - name: Test dependecies
+      run: dotnet restore ${{env.TEST_PROJECT_PATH}}
+
+    - name : Build of tests
+      run: dotnet build ${{env.TEST_PROJECT_PATH}}
 
     - name: Test
-      run: dotnet test ${{ env.TEST_PROJECT_PATH }} --no-build --verbosity normal
+      run: dotnet test ${{ env.TEST_PROJECT_PATH }}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
