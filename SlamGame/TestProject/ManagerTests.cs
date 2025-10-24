@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace TestProject
 {
@@ -28,13 +29,15 @@ namespace TestProject
             gm.AddPlayer("1");
             gm.AddPlayer("2");
 
-            string info = gm.GetAllPlayerInfo();
+            // Act
+            var info = gm.GetAllPlayerPosition();
 
-            string assertInfo = $"1: coordinats {Vector2.Zero};" +
-                $"2: coordinats {Vector2.Zero};";
-
-            Assert.Equal(2, gm.playerList.Count);
-            Assert.Equal(assertInfo, info);
+            // Assert
+            Assert.Equal(2, gm.playerList.Count); // still valid
+            Assert.True(info.ContainsKey("1"));
+            Assert.True(info.ContainsKey("2"));
+            Assert.Equal(Vector2.Zero, info["1"]);
+            Assert.Equal(Vector2.Zero, info["2"]);
         }
 
         [Fact]
@@ -47,12 +50,11 @@ namespace TestProject
             
             gm.RemovePlayer("1");
 
-            string info = gm.GetAllPlayerInfo();
-
-            string assertInfo = $"2: coordinats {Vector2.Zero};";
+            var info = gm.GetAllPlayerPosition();
 
             Assert.Equal(1, gm.playerList.Count);
-            Assert.Equal(assertInfo, info);
+            Assert.True(info.ContainsKey("2"));
+            Assert.Equal(new Vector2(0, 0), info["2"]);
         }
 
         [Fact]
@@ -63,10 +65,10 @@ namespace TestProject
             gm.AddPlayer("1");
             gm.AddPlayer("2");
 
-            string info = gm.GetPlayerInfo("2");
+            Vector2 info = gm.GetPlayerInfo("2");
 
             Assert.Equal(2, gm.playerList.Count);
-            Assert.Equal(Vector2.Zero.ToString(), info);
+            Assert.Equal(Vector2.Zero, info);
         }
 
         [Fact]
@@ -80,10 +82,10 @@ namespace TestProject
 
             gm.MovePlayer(playerID, "m.w");
 
-            string info = gm.GetPlayerInfo(playerID);
+            Vector2 info = gm.GetPlayerInfo(playerID);
             Vector2 expect = new Vector2(0, 1);
 
-            Assert.Equal(expect.ToString(), info);
+            Assert.Equal(expect, info);
         }
     }
 }

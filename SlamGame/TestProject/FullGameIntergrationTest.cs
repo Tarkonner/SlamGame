@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace TestProject
 {
@@ -38,10 +39,15 @@ namespace TestProject
 
             targetGame.MovePlayer(p1, "m.w");
 
-            string assertInfo = $"{p1}: coordinats {new Vector2(0, 1)};" +
-                $"{p2}: coordinats {Vector2.Zero};";
+            // Act
+            var info = targetGame.GetAllPlayerPosition();
 
-            Assert.Equal(assertInfo, targetGame.GetAllPlayerInfo());
+            // Assert
+            Assert.Equal(2, targetGame.playerList.Count); // still valid
+            Assert.True(info.ContainsKey("1"));
+            Assert.True(info.ContainsKey("2"));
+            Assert.Equal(new Vector2(0, 1), info["1"]);
+            Assert.Equal(Vector2.Zero, info["2"]);
         }
     }
 }

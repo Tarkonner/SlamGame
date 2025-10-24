@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,27 +42,27 @@ namespace SlamGame
             playerList.Remove(id);
         }
 
-        public string GetPlayerInfo(string id)
+        public Vector2 GetPlayerInfo(string id)
         {
-            string collectData = string.Empty;
-
-            collectData = playerList[id].coordinats.ToString();
-
-            return collectData;
+            return playerList[id].coordinats;
         }
 
-        public string GetAllPlayerInfo()
+        public Dictionary<string, Vector2> GetAllPlayerPosition()
         {
-            string collectData = string.Empty;
+            var dict = new Dictionary<string, Vector2>();
 
             foreach (var item in playerList)
             {
                 Player targetPlayer = item.Value;
-
-                collectData += $"{targetPlayer.playerID}: coordinats {targetPlayer.coordinats};";
+                dict[targetPlayer.playerID] = targetPlayer.coordinats;
             }
 
-            return collectData;
+            return dict;
+        }
+
+        public Dictionary<string, Player> GetAllPlayerInfo()
+        {
+            return playerList;
         }
 
         public void MovePlayer(string id, string moveDirection)

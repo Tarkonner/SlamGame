@@ -23,12 +23,18 @@ namespace SlamGame.Controllers
             return Ok(new { id, position = pos });
         }
 
-        [HttpGet("all")]
+        [HttpGet("allPosition")]
         public IActionResult GetAllPlayerInfo()
         {
-            var info = GameManager.instance.GetAllPlayerInfo();
+            var info = GameManager.instance.playerList
+                .ToDictionary(
+                    p => p.Key,
+                    p => new { X = p.Value.coordinats.X, Y = p.Value.coordinats.Y } // anonymous object
+                );
             return Ok(info);
         }
+
+
 
         [HttpDelete("remove/{id}")]
         public IActionResult RemovePlayer(string id)
