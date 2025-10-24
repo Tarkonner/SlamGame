@@ -17,7 +17,7 @@ namespace SlamGame
         {
             await Task.Run(() =>
             {
-                while (Program.gameLoopRunning)
+                while (MainProgram.gameLoopRunning)
                 {
                     var input = Console.ReadLine();
 
@@ -36,7 +36,7 @@ namespace SlamGame
             switch (input)
             {
                 case "Close":
-                    Program.gameLoopRunning = false;
+                    MainProgram.gameLoopRunning = false;
                     break;
                 default:
                     Console.WriteLine("Command not found.");

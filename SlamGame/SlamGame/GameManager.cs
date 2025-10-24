@@ -16,7 +16,7 @@ namespace SlamGame
         {
             instance = this;
 
-            Program.OnGameLoop += Update;
+            MainProgram.OnGameLoop += Update;
         }
 
        
@@ -27,7 +27,7 @@ namespace SlamGame
 
         public void Dispose()
         {
-            Program.OnGameLoop -= Update;
+            MainProgram.OnGameLoop -= Update;
         }
 
         public void AddPlayer(string id)

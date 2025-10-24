@@ -2,17 +2,17 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SlamGame;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
-public class Program
+public partial class MainProgram
 {
     public static bool gameLoopRunning = true;
     private static CommandSystem _commandSystem = new();
     const int loopTime = 1000;
 
     public static event Action OnGameLoop;
+
+    public static Dictionary<int, GameManager> gamesList = new();
+
 
     private static async Task Main(string[] args)
     {
@@ -39,7 +39,8 @@ public class Program
         }
 
         app.MapControllers();
-
+               
+        //Threads
         // Run the web server in the background
         var webTask = app.RunAsync();
 
@@ -55,6 +56,14 @@ public class Program
         // Stop web server when game loop ends
         await app.StopAsync();
         await webTask;
+
+        //Begin game
+        MakeGame();
+    }
+
+    public static void MakeGame()
+    {
+        gamesList.Add(gamesList.Count, new GameManager());
     }
 }
 

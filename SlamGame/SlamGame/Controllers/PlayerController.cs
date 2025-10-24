@@ -23,13 +23,6 @@ namespace SlamGame.Controllers
             return Ok(new { id, position = pos });
         }
 
-        [HttpGet("info/{id}")]
-        public IActionResult GetPlayerInfo(string id)
-        {
-            var pos = GameManager.instance.GetPlayerInfo(id);
-            return Ok(new { id, position = pos });
-        }
-
         [HttpGet("all")]
         public IActionResult GetAllPlayerInfo()
         {
