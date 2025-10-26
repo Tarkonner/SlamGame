@@ -75,11 +75,11 @@ namespace TestProject
             var jsonString = await infoRespond.Content.ReadAsStringAsync();
 
             //Deserialize JSON to check player position
-            var allPlayers = System.Text.Json.JsonSerializer
+            var allPlayers = JsonSerializer
                 .Deserialize<Dictionary<string, JsonElement>>(jsonString);
 
-            var x = allPlayers["testPlayer"].GetProperty("X").GetSingle();
-            var y = allPlayers["testPlayer"].GetProperty("Y").GetSingle();
+            var x = allPlayers["testPlayer"].GetProperty("x").GetSingle();
+            var y = allPlayers["testPlayer"].GetProperty("y").GetSingle();
             Assert.Equal(0, x);
             Assert.Equal(1, y);
         }

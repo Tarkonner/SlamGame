@@ -29,7 +29,7 @@ namespace SlamGame.Controllers
             var info = GameManager.instance.playerList
                 .ToDictionary(
                     p => p.Key,
-                    p => new { X = p.Value.coordinats.X, Y = p.Value.coordinats.Y } // anonymous object
+                    p => new { X = p.Value.coordinats.X, Y = p.Value.coordinats.Y } 
                 );
             return Ok(info);
         }
