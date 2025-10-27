@@ -1,5 +1,6 @@
 using SlamGame;
 using System.Numerics;
+using Xunit;
 
 namespace TestProject
 {
@@ -8,7 +9,7 @@ namespace TestProject
         [Fact]
         public void MoveLeft()
         {
-            Player player = new();
+            Player player = new("");
 
             player.Move("m.a");
 
@@ -19,7 +20,7 @@ namespace TestProject
         [Fact]
         public void MoveRight()
         {
-            Player player = new();
+            Player player = new("");
 
             player.Move("m.d");
 
@@ -30,7 +31,7 @@ namespace TestProject
         [Fact]
         public void MoveUp()
         {
-            Player player = new();
+            Player player = new("");
 
             player.Move("m.w");
 
@@ -41,7 +42,7 @@ namespace TestProject
         [Fact]
         public void MoveDown()
         {
-            Player player = new();
+            Player player = new("");
 
             player.Move("m.s");
 

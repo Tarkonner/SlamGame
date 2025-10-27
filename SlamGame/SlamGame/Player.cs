@@ -9,8 +9,13 @@ namespace SlamGame
 {
     public class Player
     {
-        public string playerID;
+        public string playerID { get; private set; }
         public Vector2 coordinats = Vector2.Zero;
+
+        public Player(string id)
+        {
+            playerID = id.ToString();
+        }
 
         public void Move(string input)
         {
