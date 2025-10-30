@@ -15,6 +15,7 @@ jobs:
       SOLUTION_NAME: SlamGame/SlamGame.sln
       TEST_PROJECT_PATH: SlamGame/TestProject/TestProject.csproj
       DOCKER_IMAGE_NAME: slam_game
+      Slam: "my-super-secret-key"
 
     steps:
     - name: Checkout repository
