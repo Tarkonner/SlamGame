@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using SlamGame;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Json;
@@ -12,7 +13,7 @@ using System.Numerics;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Xunit;
+using TokenUtils;
 using Xunit;
 
 namespace TestProject
@@ -20,7 +21,6 @@ namespace TestProject
     public class ControllerIntergration : IClassFixture<WebApplicationFactory<MainProgram>>, IAsyncLifetime
     {
         private readonly HttpClient _client;
-
         public ControllerIntergration(WebApplicationFactory<MainProgram> factory)
         {
             // Create an in-memory HTTP client to call your API
@@ -48,7 +48,7 @@ namespace TestProject
         public async Task CreatePlayer_ReturnsOk()
         {
             string player = "playerTest";
-            var response = await _client.PostAsync($"/api/player/create?id={player}", null);
+            var response = await _client.PostAsync($"/api/player/create", null);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -84,6 +84,21 @@ namespace TestProject
             Assert.Equal(1, y);
         }
 
+        [Fact]
+        public async Task AuterizontonCheck()
+        {
+            // Generate a JWT token
+            var token = TestingTokenGenerator.GenerateJwtToken();
 
+            // Create the request
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/player/validata");
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            // Send the request
+            var response = await _client.SendAsync(request);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }

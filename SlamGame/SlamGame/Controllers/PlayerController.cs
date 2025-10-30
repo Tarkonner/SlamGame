@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SlamGame;
 using System.Numerics;
 
@@ -41,6 +42,13 @@ namespace SlamGame.Controllers
         {
             GameManager.instance.RemovePlayer(id);
             return Ok(new { message = $"Player {id} removed." });
+        }
+
+        [HttpPost("validata")]
+        [Authorize]
+        public IActionResult ValidateToken()
+        {
+            return Ok();
         }
     }
 }

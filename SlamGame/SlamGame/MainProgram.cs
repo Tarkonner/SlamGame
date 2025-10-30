@@ -2,6 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SlamGame;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 public partial class MainProgram
 {
@@ -18,8 +21,31 @@ public partial class MainProgram
     {
         Console.WriteLine("Starting Game Server...");
 
+        string key = Environment.GetEnvironmentVariable("Slam")
+                                                   ?? throw new InvalidOperationException("JWT secret key not set in environment variable 'Slam'");
+        var keyBytes = Encoding.UTF8.GetBytes(key);        
+
         // Create and configure the web host
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
+                };
+            });
 
         // Register controllers
         builder.Services.AddControllers();
