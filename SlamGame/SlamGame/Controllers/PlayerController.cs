@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SlamGame;
 using System.Numerics;
+using System.Security.Claims;
 
 namespace SlamGame.Controllers
 {
@@ -10,18 +11,37 @@ namespace SlamGame.Controllers
     public class PlayerController : ControllerBase
     {
         [HttpPost("create")]
-        public IActionResult CreatePlayer([FromQuery] string id)
+        [Authorize]
+        public IActionResult CreatePlayer()
         {
-            GameManager.instance.AddPlayer(id);
-            return Ok(new { message = $"Player {id} created." });
+            // Get the user name from the token
+            var userName = User?.Identity?.Name; // This is ClaimTypes.Name by default
+
+            if (string.IsNullOrEmpty(userName))
+                return Unauthorized("No name claim in token");
+
+            GameManager.instance.AddPlayer(userName);
+            return Ok($"Player {userName} made");
         }
 
         [HttpPost("move")]
-        public IActionResult MovePlayer([FromQuery] string id, [FromQuery] string direction)
+        [Authorize]
+        public IActionResult MovePlayer([FromQuery] string direction)
         {
-            GameManager.instance.MovePlayer(id, direction);
-            var pos = GameManager.instance.GetPlayerInfo(id);
-            return Ok(new { id, position = pos });
+            var userName = User?.Identity?.Name;
+            if (string.IsNullOrEmpty(userName))
+                return Unauthorized("No name claim in token");
+
+            if (string.IsNullOrWhiteSpace(direction))
+                return BadRequest("Direction cannot be empty");
+
+            if (!GameManager.instance.playerList.ContainsKey(userName))
+                return NotFound($"Player {userName} not found");
+
+            GameManager.instance.MovePlayer(userName, direction);
+            var pos = GameManager.instance.GetPlayerInfo(userName);
+
+            return Ok(new { userName, position = new { X = pos.X, Y = pos.Y } });
         }
 
         [HttpGet("allPosition")]
