@@ -1,6 +1,8 @@
 # Base runtime image
-FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
+
+ENV Slam="NotSoSecretKeyThatMightJustBeAWasteOfTimeDain!!!11132HopesGoneYEHE"
 
 # Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
