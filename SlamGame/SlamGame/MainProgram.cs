@@ -6,11 +6,13 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
+
 public partial class MainProgram
 {
     public static bool gameLoopRunning = true;
     private static CommandSystem _commandSystem = new();
     const int loopTime = 1000;
+    private static string externalPort;
 
     public static event Action OnGameLoop;
 
@@ -82,9 +84,29 @@ public partial class MainProgram
         // Stop web server when game loop ends
         await app.StopAsync();
         await webTask;
+               
 
         //Begin game
         MakeGame();
+
+        //Tell registor
+        externalPort = Environment.GetEnvironmentVariable("EXTERNAL_PORT") ?? "8080";
+
+        try
+        {
+            var http = new HttpClient();
+            var registerUrl = $"http://slamgameregister:8484/GetGameServer?port={externalPort}";
+
+            Console.WriteLine($"Registering game server at {registerUrl}");
+            var response = await http.GetAsync(registerUrl);
+            response.EnsureSuccessStatusCode();
+            Console.WriteLine("Successfully registered game server!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to register game server: {ex.Message}");
+        }
+
     }
 
     public static void MakeGame()
