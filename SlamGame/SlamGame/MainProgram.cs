@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
+
 public partial class MainProgram
 {
     public static bool gameLoopRunning = true;
